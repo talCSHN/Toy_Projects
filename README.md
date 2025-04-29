@@ -1,7 +1,7 @@
 # Toy_Projects
 토이프로젝트 모음 리포지토리
 
-## 🎮 보물찾기 게임 - [소스](https://github.com/talCSHN/IoT_CSharp_WinApp_2025/tree/main/toyproject/WinFormPractice)
+## 👑 보물찾기 게임 - [소스](https://github.com/talCSHN/IoT_CSharp_WinApp_2025/tree/main/toyproject/WinFormPractice)
 
 ![toyproject](https://github.com/user-attachments/assets/87223d87-e58d-454d-bb05-2d73a078201d)
 
