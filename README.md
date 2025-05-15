@@ -19,3 +19,11 @@
 - **승리 조건** - 보물이 있는 버튼 👑 발견
   - 제한 시간(10초)내 보물 찾지 못하면 `실패` 메시지 출력. `게임 종료`
 - `게임 승리` 또는 `게임 종료`되면 자동으로 게임 리셋 후 새 게임 진행
+
+***
+
+## 영화 즐겨찾기 앱 - [소스](https://github.com/talCSHN/IoT_WPF_2025/tree/main/day06/Day06Study)
+
+https://github.com/user-attachments/assets/4de78572-386d-4700-b545-58f491fd1621
+
+
