@@ -1,0 +1,77 @@
+﻿@model IEnumerable<MyPortfolioWebApp.Models.Board>
+
+@{
+    ViewData["Title"] = "게시판 목록";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center fw-bold">게시판 목록</h2>
+
+    <div class="d-flex justify-content-end mb-3">
+        <a asp-action="Create" class="btn btn-primary">글쓰기</a>
+    </div>
+
+    <table class="table table-bordered table-striped text-center align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>이메일</th>
+                <th>작성자</th>
+                <th>제목</th>
+                <th>내용</th>
+                <th>작성일</th>
+                <th>조회수</th>
+                <th>관리</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Email</td>
+                    <td>@item.Writer</td>
+                    <td>@item.Title</td>
+                    <td>@item.Contents?.Split('\n')[0]</td>
+                    <td>@(item.PostDate?.ToString("yyyy-MM-dd") ?? "")</td>
+                    <td>@item.ReadCount</td>
+                    <td>
+                        @if (item.Id == 0)  // 벨로그 게시글
+                        {
+                            <a href="@item.VelogUrl" target="_blank" 
+                            class="text-primary text-decoration-underline">벨로그 링크</a>
+                        }
+                        else  // DB 글
+                        {
+                            <div class="d-flex justify-content-center gap-2">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">수정</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white">상세</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">삭제</a>
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+        @* <tbody> *@
+        @*     @foreach (var item in Model) *@
+        @*     { *@
+        @*         <tr> *@
+        @*             <td>@item.Email</td> *@
+        @*             <td>@item.Writer</td> *@
+        @*             <td>@item.Title</td> *@
+        @*             <td>@item.Contents?.Split('\n')[0]</td> *@
+        @*             <td>@(item.PostDate?.ToString("yyyy-MM-dd") ?? "")</td> *@
+        @*             <td>@item.ReadCount</td> *@
+        @*             <td> *@
+        @*                 <div class="d-flex justify-content-center gap-2"> *@
+        @*                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">수정</a> *@
+        @*                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info text-white">상세</a> *@
+        @*                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">삭제</a> *@
+        @*                 </div> *@
+        @*             </td> *@
+        @*         </tr> *@
+        @*     } *@
+        @* </tbody> *@
+    </table>
+</div>

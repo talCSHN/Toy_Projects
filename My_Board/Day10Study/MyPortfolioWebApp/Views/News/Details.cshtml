@@ -1,0 +1,65 @@
+﻿@inject SignInManager<CustomUser> SignInManager
+@inject UserManager<CustomUser> UserManager
+
+@using Westwind.AspNetCore.Markdown
+@model MyPortfolioWebApp.Models.News
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<section id="news" class="section">
+    <div class="container section-title" data-aos="fade-up">
+        <h2>News</h2>
+        <p>Lorem ipsum dalat sit amet.</p>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div>
+            <h4>Details</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Writer)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Writer)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Title)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>                
+                <dd class="col-sm-10">
+                    @* @Html.DisplayFor(model => model.Description) *@
+                    @Markdown.ParseHtmlString(Model.Description)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.PostDate)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.PostDate)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ReadCount)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ReadCount)
+                </dd>
+            </dl>
+        </div>
+        <div>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-sm btn-warning">Edit</a>
+                <a asp-action="Delete" asp-route-id="@Model?.Id" class="btn btn-sm btn-danger">Delete</a>
+            }
+            <a asp-action="Index" class="btn btn-sm btn-success">List</a>    
+            
+        </div>
+    </div>
+</section>

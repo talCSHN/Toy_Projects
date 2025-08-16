@@ -1,0 +1,88 @@
+﻿@model MyPortfolioWebApp.Models.RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+<style>
+    input::placeholder {
+        color: #adb5bd !important; /* Bootstrap의 text-muted보다 더 연한 회색 */
+        opacity: 0.7; /* 약간 흐리게 */
+        font-style: oblique; /* 감성 추가 */
+        font-size: 0.9rem; /* 폰트 크기 조정 */
+    }
+</style>
+
+<!-- 회원가입 페이지 -->
+<section id="register" class="section bg-light py-5">
+    <div class="container text-center mb-5" data-aos="fade-up">
+        <h2 class="fw-bold mb-2">회원가입</h2>
+        <p class="text-muted"></p>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow border-0 rounded-4">
+                    <div class="card-body p-5">
+                        <h4 class="text-center text-primary fw-bold mb-4">
+                            <i class="bi bi-person-circle me-2 fs-3"></i>회원정보 입력
+                        </h4>
+
+                        <form asp-action="Register" novalidate>
+                            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                            <!-- 이메일 -->
+                            <div class="mb-2">
+                                <label asp-for="Email" class="form-label">이메일</label>
+                                <input asp-for="Email" class="form-control form-control-lg" placeholder="example@email.com" />
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+
+                            <!-- 전화번호 -->
+                            <div class="mb-2">
+                                <label asp-for="Mobile" class="form-label">전화번호</label>
+                                <input asp-for="Mobile" class="form-control form-control-lg" placeholder="010-1234-5678" />
+                                <span asp-validation-for="Mobile" class="text-danger small"></span>
+                            </div>
+
+                            <!-- 거주지 -->
+                            <div class="mb-2">
+                                <label asp-for="City" class="form-label">거주지</label>
+                                <input asp-for="City" class="form-control form-control-lg" placeholder="서울특별시" />
+                                <span asp-validation-for="City" class="text-danger small"></span>
+                            </div>
+
+                            <!-- 취미 -->
+                            <div class="mb-2">
+                                <label asp-for="Hobby" class="form-label">취미</label>
+                                <input asp-for="Hobby" class="form-control form-control-lg" placeholder="독서, 운동, 게임 등" />
+                                <span asp-validation-for="Hobby" class="text-danger small"></span>
+                            </div>
+
+                            <!-- 패스워드 -->
+                            <div class="mb-2">
+                                <label asp-for="Password" class="form-label">비밀번호</label>
+                                <input asp-for="Password" class="form-control form-control-lg" placeholder=" 최대 4자리 이상, (숫자 포함,특수문자 제외)" />
+                                <span asp-validation-for="Password" class="text-danger small"></span>
+                            </div>
+
+                            <!-- 패스워드 확인 -->
+                            <div class="mb-4">
+                                <label asp-for="ConfirmPassword" class="form-label">비밀번호 확인</label>
+                                <input asp-for="ConfirmPassword" class="form-control form-control-lg" />
+                                <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                            </div>
+
+                            <!-- 버튼 -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-success btn-lg fw-bold">
+                                    <i class="bi bi-check-circle me-2"></i>회원가입 완료
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

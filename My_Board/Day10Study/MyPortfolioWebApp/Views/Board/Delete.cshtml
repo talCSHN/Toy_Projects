@@ -1,0 +1,39 @@
+﻿@model MyPortfolioWebApp.Models.Board
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="container mt-5" style="max-width:600px;">
+    <h1 class="mb-3 text-center">게시글 삭제</h1>
+
+    <p class="text-center fs-5 mb-4">정말 삭제하시겠습니까?</p>
+
+    <div class="card p-4 mb-4 shadow-sm">
+        <dl class="row mb-0">
+            <dt class="col-sm-3 fw-semibold">Email</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Email)</dd>
+
+            <dt class="col-sm-3 fw-semibold">Writer</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Writer)</dd>
+
+            <dt class="col-sm-3 fw-semibold">Title</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Title)</dd>
+
+            <dt class="col-sm-3 fw-semibold">Contents</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Contents)</dd>
+
+            <dt class="col-sm-3 fw-semibold">Post Date</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.PostDate)</dd>
+
+            <dt class="col-sm-3 fw-semibold">Read Count</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.ReadCount)</dd>
+        </dl>
+    </div>
+
+    <form asp-action="Delete" class="d-flex justify-content-end gap-2">
+        <input type="hidden" asp-for="Id" />
+        <a asp-action="Index" class="btn btn-outline-secondary px-4">← 목록으로</a>
+        <button type="submit" class="btn btn-danger px-4">삭제</button>
+    </form>
+</div>

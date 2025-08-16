@@ -1,0 +1,43 @@
+﻿@model MyPortfolioWebApp.Models.News
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<section id="news" class="section">
+    <div class="container section-title" data-aos="fade-up">
+        <h2>News</h2>
+        <p>Lorem ipsum dalat sit amet.</p>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <h4>Edit</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md">
+                <form asp-controller="News" asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group mb-2">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" class="form-control editor" rows="10" placeholder="본문내용"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-sm btn-success btn-kelly" />
+                        <a asp-action="Index" class="btn btn-sm btn-success">List</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

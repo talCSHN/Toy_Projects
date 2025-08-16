@@ -1,0 +1,146 @@
+﻿@* 의존성 주입(Dependency Injection)으로 객체 추가 *@
+@inject SignInManager<CustomUser> SignInManager
+@inject UserManager<CustomUser> UserManager
+
+@functions {
+    // 아래의 HTML에서만 사용할 C# 메서드 정의
+    bool IsActive(string controller, string action)
+    {
+        var routeData = ViewContext.RouteData;
+        var currController = routeData.Values["controller"]?.ToString(); // ex. Home /home
+        var currAction = routeData.Values["action"]?.ToString(); // ex. Index
+
+        // 현재 클릭한 메뉴와 뷰컨텍스트로 넘어온 메뉴값이 같으면 true
+        return string.Equals(controller, currController, StringComparison.OrdinalIgnoreCase)
+             && string.Equals(action, currAction, StringComparison.OrdinalIgnoreCase);
+    }
+}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - My Portfolio</title>
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icon/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="~/trumbowyg/ui/trumbowyg.min.css" />
+    <link rel="stylesheet" href="~/vendor/aos/aos.css" />
+    <link rel="stylesheet" href="~/vendor/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="~/vendor/glightbox/css/glightbox.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <!-- 토스트메시지용 라이브러리 -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    @* <link rel="stylesheet" href="~/MyPortfolioWebApp.styles.css" asp-append-version="true" /> *@
+</head>
+<body>
+    <header id="header" class="header d-flex align-items-center light-background sticky-top">
+        <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
+
+            <a asp-controller="Home" asp-action="Index" class="logo d-flex align-items-center me-auto me-xl-0">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <!-- <img src="assets/img/logo.png" alt=""> -->
+                <h1 class="sitename">PARK KWANHO</h1>
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <!-- ASP.NET Core Controller/View형태로 변경되어야 함 -->
+                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-controller="Home" asp-action="About">About</a></li>
+                    <li><a asp-controller="Resume" asp-action="Index">Resume</a></li>
+                    <li><a asp-controller="Resume" asp-action="Services">Services</a></li>
+                    <li><a asp-controller="Resume" asp-action="Portfolio">Portfolio</a></li>
+                    <li class="dropdown">
+                        <a href="#"><span>Board</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <ul>
+                            <li><a asp-controller="News" asp-action="Index">News</a></li>
+                            <li><a asp-controller="Board" asp-action="Index">Board</a></li>
+                        </ul>
+                    </li>
+                    <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+
+            <div class="header-social-links">
+                <!-- 로그인/회원가입 영역 -->
+                @if (SignInManager.IsSignedIn(User))    // 로그인을 했으면
+                {
+                    <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                        <button type="submit" class="link-kelly" title="@User.Identity.Name"><i class="bi bi-unlock2-fill"></i></button>
+                    </form>
+                }
+                else    // 로그인 상태가 아니면
+                {
+                    <a asp-controller="Account" asp-action="Login" class="login" title="Login"><i class="bi bi-lock-fill"></i></a>
+                }
+                <a asp-controller="Account" asp-action="Register" class="register" title="SignUp"><i class="bi bi-person-fill-add"></i></a>
+                <a href="#" class="instagram" title="Instagram"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="linkedin" title="Linkedin"><i class="bi bi-linkedin"></i></a>
+            </div>
+
+        </div>
+    </header>
+    <!-- 배경 이미지 여백땜분에 <div container 삭제 -->
+    <main class="main">
+        @RenderBody()
+    </main>
+
+    <footer id="footer" class="footer light-background">
+
+        <div class="container">
+            <div class="copyright text-center">
+                <p>© <span>Copyright</span> <strong class="px-1 sitename">Kelly</strong> <span>All Rights Reserved<br></span></p>
+            </div>
+            <div class="social-links d-flex justify-content-center">
+                @* <a href=""><i class="bi bi-twitter-x"></i></a> *@
+                @* <a href=""><i class="bi bi-facebook"></i></a> *@
+                <a href="" target="_blank"><i class="bi bi-instagram"></i></a>
+                <a href="" target="_blank">><i class="bi bi-linkedin"></i></a>
+            </div>
+            <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you've purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+                Designed by <a href="https://bootstrapmade.com/" target="_blank">BootstrapMade</a> Distributed by <a href=“https://themewagon.com target="_blank">ThemeWagon
+            </div>
+        </div>
+
+    </footer>
+
+    <!-- Scroll Top : 웹페이지 영역의 높이 100px을 넘어서면 그때 표시! -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+        <i class="bi bi-arrow-up-short"></i>
+    </a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- HTML 에디터 -->
+    <script src="~/trumbowyg/trumbowyg.min.js"></script>
+    <!-- HTML 뷰어 -->
+    <script src="~/dompurify/purify.min.js"></script>
+    <script src="~/vendor/aos/aos.js"></script>
+    <script src="~/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="~/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="~/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="~/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="~/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="~/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
